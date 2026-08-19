@@ -109,9 +109,9 @@
 
 | 状态 | 任务 | 关联 |
 |------|------|------|
-| 🔲 | Step 9: 创建 GitHub 公开仓库并推送（等待用户建仓库） | docs/04-execution-plan.md#step-9 |
+| ✅ | Step 9: 创建 GitHub 公开仓库并推送（XYWang-prog/Compare-Neighborhoods） | docs/04-execution-plan.md#step-9 |
 | ✅ | Step 9: Vercel 配置（base '/'、vercel.json、api/ 服务端代理） | docs/04-execution-plan.md#step-9 |
-| ⬜ | Step 9: Vercel 导入仓库 + 配置环境变量（GOOGLE_GEOCODE_KEY、OPENAI_KEY） | docs/04-execution-plan.md#step-9 |
+| ⬜ | Step 9: Vercel 导入仓库 + 配置 3 个环境变量（GOOGLE_GEOCODE_KEY、OPENAI_KEY、VITE_MAPBOX_TOKEN） | docs/04-execution-plan.md#step-9 |
 | ⬜ | Step 9: 验证公网可访问 | docs/04-execution-plan.md#step-9 |
 
 ---
@@ -136,4 +136,4 @@
 | ⬜ | Living Area 详情页 (`/area/:id`) | 趋势折线图 |
 | ⬜ | BG 聚合算法实现 | 2-6个相邻相似BG自动聚合 |
 | ⬜ | 响应式移动端适配 | 手机屏幕布局调整 |
-| ⬜ | Mapbox token 安全处理 | 生产环境用环境变量 |
+| ✅ | Mapbox token 安全处理 | 已改为 VITE_MAPBOX_TOKEN 环境变量注入（2026-08-18） |
