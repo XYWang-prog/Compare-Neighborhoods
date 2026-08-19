@@ -244,8 +244,13 @@ Data: ${context}`
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        system: 'You output only valid JSON arrays. No markdown.',
-        user: prompt,
+        // OpenAI 原生格式（messages）：
+        // 开发环境代理原样转发给 OpenAI；生产环境服务端函数固定 model、钳制参数后转发
+        model: 'gpt-4o-mini',
+        messages: [
+          { role: 'system', content: 'You output only valid JSON arrays. No markdown.' },
+          { role: 'user', content: prompt },
+        ],
         temperature: 0.3,
         max_tokens: 500,
       }),
@@ -627,8 +632,13 @@ Output JSON only. The "paragraphs" array must contain exactly 3 text paragraphs,
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        system: systemPrompt,
-        user: userPrompt,
+        // OpenAI 原生格式（messages）：
+        // 开发环境代理原样转发给 OpenAI；生产环境服务端函数固定 model、钳制参数后转发
+        model: 'gpt-4o-mini',
+        messages: [
+          { role: 'system', content: systemPrompt },
+          { role: 'user', content: userPrompt },
+        ],
         temperature: 0.4,
         max_tokens: 800,
       }),
