@@ -35,3 +35,4 @@ data/jcpd-calls-for-service.geojson
 
 # 构建产物
 *.tsbuildinfo
+.vite
