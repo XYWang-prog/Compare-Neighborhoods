@@ -11,13 +11,14 @@ export default async function handler(req: any, res: any) {
     res.status(405).json({ error: 'POST only' })
     return
   }
-  // 只取前 4 条消息，内容总长 ≤8000 字符（防公开接口被恶意塞超长提示词）
+  // 只取前 4 条消息，内容总长 ≤20000 字符（防公开接口被恶意塞超长提示词；
+  // 三社区对比的真实数据量约 5-10K 字符，8000 上限会误伤正常请求）
   const messages = Array.isArray(req.body?.messages) ? req.body.messages.slice(0, 4) : []
   if (messages.length === 0) {
     res.status(400).json({ error: 'messages is required' })
     return
   }
-  if (JSON.stringify(messages).length > 8000) {
+  if (JSON.stringify(messages).length > 20000) {
     res.status(400).json({ error: 'messages too long' })
     return
   }
