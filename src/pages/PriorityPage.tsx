@@ -19,9 +19,11 @@ function PriorityPage() {
   const [params] = useSearchParams()
   // 从 URL 恢复之前的选择（从对比页 Back 回来时保留），只接受合法特征键且最多 4 个
   const validKeys = new Set(CHARACTERISTICS.map(c => c.key))
-  const [selected, setSelected] = useState<string[]>(() =>
-    (params.get('priorities')?.split(',') || []).filter(k => validKeys.has(k)).slice(0, 4)
-  )
+  const [selected, setSelected] = useState<string[]>(() => {
+    // 取 URL 里最后一次出现的 priorities 值（历史上可能有重复参数，get() 只取第一个旧值）
+    const raw = params.getAll('priorities').pop() || ''
+    return [...new Set(raw.split(','))].filter(k => validKeys.has(k)).slice(0, 4)
+  })
 
   const toggle = (key: string) => {
     setSelected(prev =>
@@ -30,9 +32,13 @@ function PriorityPage() {
   }
 
   const handleNext = () => {
-    const base = params.toString()
+    // 先移除 URL 里已有的 priorities 再写入本次选择：
+    // 否则会出现两个同名参数，而 get() 只读第一个旧值，新选择会被忽略
+    const next = new URLSearchParams(params)
+    next.delete('priorities')
     const prio = selected.join(',')
-    navigate(`/compare?${base}&priorities=${prio}`)
+    if (prio) next.set('priorities', prio)
+    navigate(`/compare?${next.toString()}`)
   }
 
   return (

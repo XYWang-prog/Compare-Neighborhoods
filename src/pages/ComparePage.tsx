@@ -231,7 +231,8 @@ function ComparePage() {
   const areaC = useMemo(() => params.get('areaC') ? livingAreas.find(a => a.id === params.get('areaC')) : undefined, [params])
   const [venueType, setVenueType] = useState<string | null>(null)
   const [viewTab, setViewTab] = useState<'howto' | 'data' | 'selling'>('howto')
-  const priorities = params.get('priorities')?.split(',').filter(Boolean) || []
+  // 取最后一次出现的 priorities 值（历史 URL 可能有重复参数，get() 只取第一个旧值）
+  const priorities = (params.getAll('priorities').pop() || '').split(',').filter(Boolean)
   const aptType = params.get('aptType') || '1br'
   const rentMin = parseInt(params.get('rentMin') || '') || 2000
   const rentMax = parseInt(params.get('rentMax') || '') || 5000

@@ -50,7 +50,8 @@ function PreferencesPage() {
     if (destination.trim()) url += `&commuteDest=${encodeURIComponent(destination)}`
     if (workCoords) url += `&workLat=${workCoords[1]}&workLng=${workCoords[0]}`
     // 从对比页返回时，把已选的社区特征优先级继续往下传
-    const priorities = params.get('priorities') || ''
+    // 取最后一次出现的值（历史 URL 可能有重复参数，get() 只取第一个旧值）
+    const priorities = params.getAll('priorities').pop() || ''
     if (priorities) url += `&priorities=${priorities}`
     navigate(url)
   }
